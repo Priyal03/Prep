@@ -1,37 +1,36 @@
 package threads;
 
 class ValueObject {
-	
+
 	int num;
 	boolean set = false;
-	
-	
 
 	public synchronized void getNum() {
-		while(!set) {
+		while (!set) {
 			try {
 				wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-			System.out.println("consuming " + num);
-			set = false;
-			notify();
+		System.out.println("consuming " + num);
+		set = false;
+		notify();
 	}
+
 	public synchronized void setNum(int num) {
-		while(set) {
+		while (set) {
 			try {
-				wait(); //wait on thread is done with the help of object. 
-				//thread is waiting for this particular object here.
+				wait(); // wait on thread is done with the help of object.
+				// thread is waiting for this particular object here.
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-			System.out.println("setting value " + num);
-			this.num = num;
-			set = true;
-			notify();
+		System.out.println("setting value " + num);
+		this.num = num;
+		set = true;
+		notify();
 	}
 }
 
